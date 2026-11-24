@@ -1,0 +1,30 @@
+[package]
+name = "mini_office_core"
+version = "1.0.0"
+edition = "2021"
+description = "Offline Rust core for Mini Office (Docs, Sheets, Slides) on Android"
+
+[lib]
+name = "mini_office_core"
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+
+[dependencies]
+uniffi = { version = "0.30", features = ["cli"] }
+thiserror = "2"
+pulldown-cmark = { version = "0.13", default-features = false }
+docx-rs = { version = "0.4", default-features = false }
+calamine = "0.35"
+rust_xlsxwriter = "0.92"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+quick-xml = "0.37"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

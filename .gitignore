@@ -1,0 +1,7 @@
+target/
+build/
+.gradle/
+*.so
+android-app/app/src/main/kotlin-gen/
+local.properties
+*.jks
