@@ -136,20 +136,13 @@ fun DocsEditorScreen(
             OutlinedButton(onClick = { showOutlineManual = !showOutlineManual }) {
                 Text(if (showOutlineManual) "Ẩn mục lục" else "Mục lục")
             }
-            FilledTonalButton(onClick = { applySnippet("
-# ") }) { Text("H1") }
-            FilledTonalButton(onClick = { applySnippet("
-## ") }) { Text("H2") }
+            FilledTonalButton(onClick = { applySnippet("\n# ") }) { Text("H1") }
+            FilledTonalButton(onClick = { applySnippet("\n## ") }) { Text("H2") }
             FilledTonalButton(onClick = { applySnippet("**", "**") }) { Text("Đậm") }
             FilledTonalButton(onClick = { applySnippet("*", "*") }) { Text("Nghiêng") }
-            FilledTonalButton(onClick = { applySnippet("
-- ") }) { Text("Danh sách") }
+            FilledTonalButton(onClick = { applySnippet("\n- ") }) { Text("Danh sách") }
             FilledTonalButton(onClick = {
-                applySnippet("
-| Cột 1 | Cột 2 |
-| --- | --- |
-| Giá trị | Giá trị |
-")
+                applySnippet("\n| Cột 1 | Cột 2 |\n| --- | --- |\n| Giá trị | Giá trị |\n")
             }) { Text("Bảng") }
             Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(onClick = { showSearch = !showSearch }) { Text("Tìm") }

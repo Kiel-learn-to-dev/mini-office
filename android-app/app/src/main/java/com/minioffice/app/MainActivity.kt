@@ -198,37 +198,17 @@ class MainActivity : ComponentActivity() {
                             val (fileName, sampleContent, targetModule) = when (kind) {
                                 FileKind.DOCS -> Triple(
                                     "tai_lieu_${System.currentTimeMillis() % 10000}.md",
-                                    "# Kế hoạch công việc
-
-## 1. Mục tiêu
-Soạn thảo văn bản **offline 100%** trên Redmi Pad SE.
-",
+                                    "# Kế hoạch công việc\n\n## 1. Mục tiêu\nSoạn thảo văn bản **offline 100%** trên Redmi Pad SE.\n",
                                     OfficeModule.Docs
                                 )
                                 FileKind.SHEETS -> Triple(
                                     "bang_tinh_${System.currentTimeMillis() % 10000}.csv",
-                                    "HangMuc,SL,DonGia,ThanhTien
-MayChu,2,8500000,=B2*C2
-BanQuyen,1,6000000,=B3*C3
-Tong,=SUM(B2:B3),,=SUM(D2:D3)",
+                                    "HangMuc,SL,DonGia,ThanhTien\nMayChu,2,8500000,=B2*C2\nBanQuyen,1,6000000,=B3*C3\nTong,=SUM(B2:B3),,=SUM(D2:D3)",
                                     OfficeModule.Sheets
                                 )
                                 else -> Triple(
                                     "trinh_chieu_${System.currentTimeMillis() % 10000}.slides",
-                                    "# Đề xuất giải pháp 2026
-@layout: cover
-@notes: Chào mừng và giới thiệu mục tiêu
-Nhanh · Nhẹ · 100% Offline
-===
-# Kiến trúc hệ thống
-@layout: two_col
-Rust Core:
-- Xử lý .docx/.xlsx/.pptx
-- Không GC, ít tốn RAM
-@right
-Jetpack Compose:
-- Mượt 90Hz trên 11 inch
-- Bộ gõ tiếng Việt chuẩn",
+                                    "# Đề xuất giải pháp 2026\n@layout: cover\n@notes: Chào mừng và giới thiệu mục tiêu\nNhanh · Nhẹ · 100% Offline\n===\n# Kiến trúc hệ thống\n@layout: two_col\nRust Core:\n- Xử lý .docx/.xlsx/.pptx\n- Không GC, ít tốn RAM\n@right\nJetpack Compose:\n- Mượt 90Hz trên 11 inch\n- Bộ gõ tiếng Việt chuẩn",
                                     OfficeModule.Slides
                                 )
                             }

@@ -103,8 +103,7 @@ fun SlidesEditorScreen(
             FilledTonalButton(onClick = {
                 val blank = SlideItem(
                     title = "Slide ${slides.size + 1}",
-                    bodyLeft = "- Ý chính 1
-- Ý chính 2",
+                    bodyLeft = "- Ý chính 1\n- Ý chính 2",
                     bodyRight = "",
                     notes = "",
                     layout = SlideLayout.TITLE_BODY
