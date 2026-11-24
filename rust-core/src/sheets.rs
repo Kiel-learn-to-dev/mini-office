@@ -402,7 +402,7 @@ pub fn to_csv(sheet: &SheetData) -> String {
 
 pub fn read_xlsx(path: &str) -> Result<Vec<SheetData>, OfficeError> {
     let mut workbook = open_workbook_auto(path).map_err(|e| OfficeError::Parse {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     let mut result = Vec::new();
@@ -460,22 +460,22 @@ pub fn export_xlsx(sheets_list: &[SheetData], output_path: &str) -> Result<u64, 
 
             if trimmed.starts_with('=') {
                 ws.write_formula(r, c, trimmed).map_err(|e| OfficeError::Export {
-                    message: e.to_string(),
+                    detail: e.to_string(),
                 })?;
             } else if let Ok(num) = trimmed.parse::<f64>() {
                 ws.write_number(r, c, num).map_err(|e| OfficeError::Export {
-                    message: e.to_string(),
+                    detail: e.to_string(),
                 })?;
             } else {
                 ws.write_string(r, c, trimmed).map_err(|e| OfficeError::Export {
-                    message: e.to_string(),
+                    detail: e.to_string(),
                 })?;
             }
         }
     }
 
     let bytes = workbook.save_to_buffer().map_err(|e| OfficeError::Export {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
     storage::atomic_write_bytes(output_path, &bytes)
 }

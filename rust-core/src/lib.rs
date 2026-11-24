@@ -7,16 +7,16 @@ uniffi::setup_scaffolding!();
 
 #[derive(Debug, thiserror::Error, uniffi::Error)]
 pub enum OfficeError {
-    #[error("Lỗi truy cập tệp cục bộ: {message}")]
-    Io { message: String },
+    #[error("Lỗi truy cập tệp cục bộ: {detail}")]
+    Io { detail: String },
     #[error("Đường dẫn tệp không hợp lệ")]
     InvalidPath,
     #[error("Tệp không tồn tại: {path}")]
     NotFound { path: String },
-    #[error("Lỗi xuất định dạng tài liệu: {message}")]
-    Export { message: String },
-    #[error("Lỗi đọc định dạng tệp: {message}")]
-    Parse { message: String },
+    #[error("Lỗi xuất định dạng tài liệu: {detail}")]
+    Export { detail: String },
+    #[error("Lỗi đọc định dạng tệp: {detail}")]
+    Parse { detail: String },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, uniffi::Enum)]

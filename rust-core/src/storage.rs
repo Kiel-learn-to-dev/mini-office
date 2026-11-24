@@ -22,7 +22,7 @@ pub fn atomic_write_bytes(path: &str, data: &[u8]) -> Result<u64, OfficeError> {
     let target = Path::new(path);
     let parent = target.parent().ok_or(OfficeError::InvalidPath)?;
     fs::create_dir_all(parent).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     let file_name = target
@@ -32,17 +32,17 @@ pub fn atomic_write_bytes(path: &str, data: &[u8]) -> Result<u64, OfficeError> {
     let temp_path = parent.join(format!(".{}.tmp", file_name));
 
     let mut file = File::create(&temp_path).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
     file.write_all(data).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
     file.sync_all().map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     fs::rename(&temp_path, target).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     Ok(data.len() as u64)
@@ -56,7 +56,7 @@ pub fn read_text_file(path: &str) -> Result<String, OfficeError> {
         });
     }
     fs::read_to_string(target).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })
 }
 
@@ -64,19 +64,19 @@ pub fn list_workspace_files(dir_path: &str) -> Result<Vec<FileEntry>, OfficeErro
     let dir = Path::new(dir_path);
     if !dir.exists() {
         fs::create_dir_all(dir).map_err(|e| OfficeError::Io {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
         return Ok(Vec::new());
     }
 
     let mut entries = Vec::new();
     let read_dir = fs::read_dir(dir).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     for item in read_dir {
         let item = item.map_err(|e| OfficeError::Io {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
         let path = item.path();
         if !path.is_file() {
@@ -87,7 +87,7 @@ pub fn list_workspace_files(dir_path: &str) -> Result<Vec<FileEntry>, OfficeErro
             _ => continue,
         };
         let meta = item.metadata().map_err(|e| OfficeError::Io {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
         let modified_epoch_secs = meta
             .modified()
@@ -123,7 +123,7 @@ pub fn rename_file(old_path: &str, new_name: &str) -> Result<String, OfficeError
     let parent = old.parent().ok_or(OfficeError::InvalidPath)?;
     let new_path = parent.join(trimmed);
     fs::rename(old, &new_path).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
     Ok(new_path.to_string_lossy().to_string())
 }
@@ -136,6 +136,6 @@ pub fn delete_file(path: &str) -> Result<(), OfficeError> {
         });
     }
     fs::remove_file(target).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })
 }

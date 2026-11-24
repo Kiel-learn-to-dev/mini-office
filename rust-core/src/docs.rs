@@ -251,7 +251,7 @@ pub fn export_markdown_to_docx(markdown: &str, output_path: &str) -> Result<u64,
     docx.build()
         .pack(&mut buf)
         .map_err(|e| OfficeError::Export {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
 
     let bytes = buf.into_inner();

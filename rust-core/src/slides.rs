@@ -190,10 +190,10 @@ pub fn export_pptx(items: &[SlideItem], output_path: &str) -> Result<u64, Office
         let opts = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
 
         let map_err = |e: zip::result::ZipError| OfficeError::Export {
-            message: e.to_string(),
+            detail: e.to_string(),
         };
         let io_err = |e: std::io::Error| OfficeError::Export {
-            message: e.to_string(),
+            detail: e.to_string(),
         };
 
         let mut content_overrides = String::new();
@@ -319,10 +319,10 @@ fn extract_slide_text_blocks(xml: &str) -> Vec<String> {
 /// Đọc và trích xuất danh sách slide từ tệp .pptx có sẵn.
 pub fn read_pptx(path: &str) -> Result<Vec<SlideItem>, OfficeError> {
     let file = File::open(path).map_err(|e| OfficeError::Io {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
     let mut archive = ZipArchive::new(file).map_err(|e| OfficeError::Parse {
-        message: e.to_string(),
+        detail: e.to_string(),
     })?;
 
     let mut slide_entries: Vec<(u32, String)> = Vec::new();
@@ -343,11 +343,11 @@ pub fn read_pptx(path: &str) -> Result<Vec<SlideItem>, OfficeError> {
     let mut items = Vec::new();
     for (idx, (_, entry_name)) in slide_entries.into_iter().enumerate() {
         let mut f = archive.by_name(&entry_name).map_err(|e| OfficeError::Parse {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
         let mut xml = String::new();
         f.read_to_string(&mut xml).map_err(|e| OfficeError::Io {
-            message: e.to_string(),
+            detail: e.to_string(),
         })?;
 
         let blocks = extract_slide_text_blocks(&xml);
