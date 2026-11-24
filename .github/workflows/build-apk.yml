@@ -64,9 +64,10 @@ jobs:
       - name: Generate Kotlin UniFFI bindings
         working-directory: rust-core
         run: |
+          cargo build
           mkdir -p ../android-app/app/src/main/kotlin-gen
           cargo run --bin uniffi-bindgen generate \
-            --library ../android-app/app/src/main/jniLibs/arm64-v8a/libmini_office_core.so \
+            --library target/debug/libmini_office_core.so \
             --language kotlin \
             --out-dir ../android-app/app/src/main/kotlin-gen
 
